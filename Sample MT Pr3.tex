@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx, amsmath, mathtools, listings, color, caption, rotating, subfigure, fullpage, textcomp, enumerate}
+
+\begin{document}
+\section*{Problem 3}
+\begin{enumerate}[(a)]
+\item Restate the hypothesis $H_0: \mu_1 = \mu_2$ vs. $H_a: \mu_1 < \mu_2$ in terms of $F_1(x)$ and $F_2(x)$. Be precise in your statement.
+
+\emph{If two populations have the same family of distribution and the same parameters, it should be clear that the CDFs will also be the same. This means that the null hypothesis may be equivalently re-written $H_0: F_1(x) = F_2(x)$. However, consider the alternative hypothesis, where $\mu_1 < \mu_2$. This means that the average for population 1 is less than the average of population 2. For at least point $x$, this means that there was less``mass'' of the distribution in population 1 to the right of $x$ in population 1 than population 2 (because the mean is smaller in population 1). Since there is less mass to the right in population 1, this means that there is more mass to the left, and thus, a higher probability of a value being less than $x$ than in population 2. Translated to math, this means for at least one point $x$, $H_a: F_1(x) > F_2(x)$.}
+
+\item Suppose in part (a) the alternative hypothesis is two-sided. How can this alternative be expressed in terms of $F_1(x)$ and $F_2(x)$?
+
+\emph{A two-sided alternative is expressed as a combination of two one-sided alternatives, allowing one distribution to dominate the other, or vice versa, but not allowing the distributions to alternate which one dominates the other. $H_a: F_1(x) > F_2(x)$ for at least one $x$ (and equal for everything else), {\bf or} $F_1(x) > F_2(x)$ for at least one $x$, (and all other points equal).}
+
+\item Explain the difference between a skewed distribution and a heavy-tailed distribution.
+
+\emph{A skewed distribution is one in which the mean and median do not equal each other. This happens in distributions that are not symmetric, like the $\chi^2$ or Exponential.}
+
+\emph{A heavy-tailed distribution is one in which the tails of the distribution (the parts of the distribution that are far away from the mean or median) do not drop quickly. Formally, this means that there is still a significant amount of probability for extreme values of the random variable. Practically, this means there is a higher chance of seeing very large values than similar thin-tailed distributions.}
+
+
+\item Calculate the power for a normal test with known variance when testing $H_0: \mu = 0 vs. H_a: \mu < 0$ when the true mean is $\mu=-5$ and the variance is $\sigma^2 =9$ for a sample of size $n = 15$ from a normal distribution. Use $\alpha = .05$. Calculate the power of the binomial test for this problem.
+
+\emph{Recall that power is the probability that we correctly reject the null hypothesis when the alternative hypothesis is true. In this problem, we would reject the null hypothesis if $\sqrt{n} (\bar{x} - \mu_0) / \sigma < -z_{1-\alpha}$. We would need to find the probability that this happened, given that the true mean was $\mu=-5$.}
+
+\begin{align*}
+&P \left. \left(\frac{\sqrt{n} (\bar{x} - \mu_0)}{\sigma} < -z_{1-\alpha} \right| \mu=-5 \right) 
+= P\left. \left(\frac{\sqrt{15} (\bar{x})}{3} < -z_{1-\alpha} \right| \mu=-5 \right) \\
+&= P \left. \left(\frac{\sqrt{15} (\bar{x})}{3} - \frac{\sqrt{15} \cdot (-5)}{3} < -z_{1-\alpha} - \frac{\sqrt{15} \cdot (-5)}{3} \right| \mu=-5 \right) \\
+&= P \left. \left(\frac{\sqrt{15} (\bar{x} + 5)}{3} < -z_{1-\alpha} - \frac{\sqrt{15} \cdot (-5)}{3} \right| \mu=-5 \right)
+\end{align*}
+\emph{At this point, note that under the alternative hypothesis, the left side is now a standard normal, and we can use a Z table.}
+\begin{align*}
+P \left(Z < -z_{1-\alpha} + \frac{5 \sqrt{15}}{3} \right) = \Phi \left(-z_{1-\alpha} + \frac{5 \sqrt{15}}{3} \right)
+\end{align*}
+\emph{For $\alpha=.05$, this probability is $\Phi\left( 4.81 \right) \approx 1$.}
+
+\emph{For the binomial test, we must find the probability of observing a value less than the null hypothesis median, given that the true median is determined by the alternative, with given variance. That is, if $p$ is the probability of seeing a value greater than the median of $0$,}
+\begin{align*}
+p &= P \left. \left( X < 0 \right| \mu=-5 \right) \\
+& = P \left. \left( \frac{X+5}{3} < \frac{5}{3} \right| \mu=-5 \right) \\
+& = P \left( Z < \frac{5}{3} \right) = 0.952.
+\end{align*}
+\emph{Plugging into the power equation for a binomial test from Page 20, }
+\begin{align*}
+\mbox{Power of Binomial Test} 
+& = 1-\Phi \left( 1.645 \sqrt{\frac{.25}{p(1-p)}} - \frac{p-.5}{\sqrt{p(1-p)/n}} \right)\\
+& = 1-\Phi \left( -4.342 \right) \approx 1.
+\end{align*}
+
+\item Calculate the power for a Binomial test with known variance when testing $H_0: \mu = 0$ vs. $H_a: \mu < 0$ when the true mean is $\mu=−5$ and the variance is $\sigma^2 =9$ for a sample of size $n = 15$ from a Laplace distribution. Use $\alpha = .05$. 
+\emph{First we need to find the probability that a single observation is less than the mean under the null hypothesis, using the Laplace distribution with mean $-5$ and variance $9$.}
+\begin{align*}
+p &= P \left. \left( X < 0 \right| X \sim Laplace(\mbox{mean}=-5, \mbox{var} = 9) \right) \\
+&= P \left. \left( \frac{X+5}{3} < \frac{5}{3} \, \right| X \sim Laplace(\mbox{mean}=-5, \mbox{var} = 9) \right) \\
+& = 1 - \frac{1}{2} \exp \left( - \sqrt{2} \frac{\frac{5}{3}-\mu} {\sigma} \right) \\
+& = 1 - \frac{1}{2} \exp \left( - \sqrt{2} \frac{\frac{5}{3}+5}{3} \right) = 0.978
+\end{align*}
+\emph{The power of the binomial test is than an exercise in plugging in the right values from the formula on Page 20.}
+\begin{align*}
+\mbox{Power of Binomial Test} 
+& = 1-\Phi \left( 1.645 \sqrt{\frac{.25}{p(1-p)}} - \frac{p-.5}{\sqrt{p(1-p)/n}} \right)\\
+& = 1-\Phi \left( -7.014 \right) \approx 1.
+\end{align*}
+
+
+\end{enumerate}
+\end{document} 
