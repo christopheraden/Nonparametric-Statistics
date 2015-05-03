@@ -1,5 +1,6 @@
-#The code in the exactRankTests package seems to be incorrect for Savage Scores.
-#I have written my own version and confirmed that it gives the correct outputs.
+# The code in the exactRankTests package seems to be incorrect for Savage Scores.
+# I have written my own version and confirmed that it gives the correct outputs.
+# This function, however, assumes that there are no ties in the data.
 
 savageScores = function(X){
   #Function calculates the Savage (shifted Exponential) Scores described
