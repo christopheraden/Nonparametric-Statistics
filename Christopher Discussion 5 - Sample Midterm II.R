@@ -36,10 +36,9 @@ labelData = data.frame(Label=rep(c("S1", "S2"), times=c(n,m)), Data=c(S1,S2))
 labelData = labelData[order(labelData$Data), ] #Sort according to Data value.
 
 #Give value 1 to the smallest, 2 to the largest, 3 to second largest, 4 to second smallest, etc...
-dataWithST = data.frame(labelData, STRank = c( seq(1, (n+m), 2), seq(n+m, 1, -2))); dataWithST
+dataWithST = data.frame(labelData, STRank = c(1,4,5,8,9,12,11,10,7,6,3,2)); dataWithST
 dataWithST[dataWithST$Label=="S1", ] #Subset: Take only the obs that are in sample 1. 
 siegelTukeyS1Sums = sum(dataWithST$STRank[dataWithST$Label=="S1"]); siegelTukeyS1Sums #Sum their Siegel-Tukey Ranks.
-
 
 #Part H: Kolmogorov-Smirnov
 F1 = ecdf(S1) #Empirical CDF of sample 1.

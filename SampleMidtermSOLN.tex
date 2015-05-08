@@ -99,24 +99,6 @@ Savage Score:	& -0.917 & -0.726 & -0.615 & -0.347 &  0.020 &  0.603 &  1.103 &  
 \end{tabular}
 \end{table}
 
-%\begin{table}[H] \center
-%\begin{tabular}{ccc} \hline
-%Label & Data & SavageScore \\ \hline
-%S1 & 4 & -0.92 \\ 
-%S1 & 6 & -0.73 \\ 
-%S1 & 7 & -0.61 \\ 
-%S1 & 9 & -0.35 \\ 
-%S1 & 11 & 0.02 \\ 
-%S1 & 13 & 0.60 \\ 
-%S1 & 14 & 1.10 \\ 
-%S1 & 30 & 2.10 \\ 
-%S2 & 5 & -0.83 \\ 
-%S2 & 8 & -0.49 \\ 
-%S2 & 10 & -0.18 \\ 
-%S2 & 12 & 0.27 \\ \hline
-%\end{tabular}
-%\end{table}
-
 \vspace{-3em}
 \begin{align*}
 & D_{obs} \text{(sum exponential scores of S1) } = 1.224 \\
@@ -126,7 +108,7 @@ Savage Score:	& -0.917 & -0.726 & -0.615 & -0.347 &  0.020 &  0.603 &  1.103 &  
 \item Test the hypothesis $H_0:\sigma_1=\sigma_2$ vs $H_a:\sigma_1>\sigma_2$ using the the Siegel-Tukey test at $\alpha=.05$.
 \emph{Note that our estimates of $\sigma_1$ and $\sigma_2$ are $8.137$, and $2.986$.}
 \begin{align*}
-& W(\text{Sum of Siegel-Tukey Rank}) = 1+5+7+11+10+6+4+2=46 \\
+& W(\text{Sum of Siegel-Tukey Rank}) = 1+5+8+12+10+6+3+2 = 47 \\
 & \text{From Table A3}, 5\% \text{ lower} = 41 \Rightarrow \text{Do NOT reject } H_0. \\
 \end{align*}
 
