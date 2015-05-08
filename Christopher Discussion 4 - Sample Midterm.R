@@ -28,8 +28,8 @@ y[c(floor(a), ceiling(b))] #CI. Remember, round down the lower bound, round up t
 
 
 ###Question 2
-S1 = c(5, 6, 8, 9, 10, 12, 14, 30)
-S2 = c(7, 8, 9, 10)
+S1 = c(4, 6, 7, 9, 11, 13, 14, 30)
+S2 = c(5, 8, 10, 12)
 n = length(S1); n
 m = length(S2); m
 
@@ -39,32 +39,31 @@ median(S1); median(S2) #Medians of the two samples
 
 #Part B
 #To show the variances are unequal, look at their ratio. It's huge!
-var(S1) / var(S2) # Ratio = 37.84. They are very different. 
+var(S1) / var(S2) # Ratio = 7.426. They are very different. 
 #Need to approximate the degrees of freedom and use a different denominator than the pooled t-test.
-numer = mean(S1) - mean(S2)
+numer =  mean(S2) - mean(S1)
 denom = sqrt( var(S1)/n + var(S2)/m  )
 tTest = numer / denom; tTest
 DF = { (var(S1)/n + var(S2)/m)^2 } / { (var(S1)/n)^2 / (n-1) + (var(S2)/m)^2 / (m-1) }; DF 
 qt(.95, DF) #Critical value for this effective degrees of freedom.
 #On the test, calculate the approximate DF, then report the critical values that sandwich those DF.
-#For example, DF=7.7 here, so report these criticals
-qt(.95, 7:8) #1.894579, 1.859548. In either case, we fail to reject H0.
+#For example, DF=9.646 here, so report these criticals
+qt(.95, 9:10) #1.833113, 1.812461. In either case, we fail to reject H0.
+pt(tTest, DF, lower.tail = FALSE) #P-value
 
 #Part C
-#CI procedure is similar to Question 1. Note: This is a CI for mu_x - mu_y! 
-#To get mu_y - mu_x, take the interval and multiply each bound by -1. 
+#CI procedure is similar to Question 1.
 lower = numer - qt(.975, DF) * denom; lower
 upper = numer + qt(.975, DF) * denom; upper
-#muX - muY: (-3.4, 9.9), so muY-muX would be (-9.9, 3.4).
 
 #Part D: Wilcoxon
 cbind(Data = c(S1, S2), Ranks = rank(c(S1, S2))) #Calculate rank of combined data, add up the ranks of Sample 1.
-W = 1 + 2 + 4.5 + 6.5 + 8.5 + 10 + 11 + 12; W
+W = sum(rank(c(S1, S2))[1:n]); W #Sum of ranks of S1. W = 1 + 3 + 4 + 6 + 8 + 10 + 11 + 12
 #Look up in Table A3, n=8, m=4. 5% upper: 63.
-#W = 55.5 < 63 = CriticalValue, so fail to reject H0.
+#W = 55 < 63 = Critical Value, so fail to reject H0.
 
 #Part E:
-as.numeric(outer(S2,S1,"-")) #Computes All pairwise diffs
+as.numeric(outer(S2,S1,"-")) #Computes all pairwise diffs
 median(as.vector(outer(S2,S1,"-"))) #Hodges-Lehmann Estimate
 #Look up values in A4. lower = 5, upper = 27. So we take the (5+1) = 6th-ranked diff and 27th-ranked diff
 sort(as.vector(outer(S2,S1,"-")))[c(6,27)] #Sort the pairwise diffs and take the 6th and 27th to make 95% CI.
