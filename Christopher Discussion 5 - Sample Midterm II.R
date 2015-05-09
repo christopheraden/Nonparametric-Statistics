@@ -2,7 +2,6 @@
 # a table with every possible permutation of the data, the Wilcoxon Rank Sum statistic
 # and the Savage score for that permutation. This is useful for developing p-values.
 
-
 ###QUESTION 2
 #Continuing the sample midterm review, we'll move on past Hodges-Lehmann now.
 #NOTE: The data has been changed since last week. This new data has no ties. 
@@ -14,7 +13,7 @@ m = length(S2); m
 
 #Part F: Savage Scores
 #Load the SavageScores R file. This command assumes SavageScores.R is in the same folder as this file!
-source("SavageScores.R")
+source("../Computing/SavageScores.R")
 dataWithSavageScores = data.frame(Label=rep(c("S1", "S2"), times=c(n,m)), #Repeat Labels as many times as there are samples in each group
   Data=c(S1, S2), SavageScore=round(savageScores(c(S1, S2)),3)) #Show data next to Savage Scores, too.
 #Take Savage Scores that belong to Sample One and add them all together.
