@@ -1,0 +1,199 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx, amsmath, mathtools, listings, color, caption, rotating, subfigure, fullpage, textcomp, enumerate, float}
+
+\begin{document}
+\section*{Problem 1}
+\begin{enumerate}[(a)]
+\item Calculate sample mean $\bar Y$, standard deviation $s$ and median $\hat\theta$.
+\[ \bar{y}=3.06, sd=2.257, \hat{\theta}=2.375 \]
+
+\item Carry out a t-test of the hypothesis $H_0: \mu=3$ vs $H_a: \mu<3$.
+Find the p-value and state your conclusions at $\alpha=0.05$.
+\[ t^*=\frac{\bar{y}-\mu}{sd/\sqrt{n}}=\frac{3.06-3}{2.257/\sqrt{20}}=0.1189 > -t(0.95,19)=-1.73 \]
+\[ \text{p-value} = 0.5467 \Rightarrow \text{Do NOT reject } H_0 \] 
+
+\item Calculate the 95\% t-interval for $\mu$.
+\[ \text{CI: } \bar{Y} \pm t(0.975,19) \frac{sd}{\sqrt{n}} = 3.06 \pm 2.093 \frac{2.257}{\sqrt{20}} = (2.0036,4.116) \]
+
+\item Test the hypothesis $H_0: \theta=3$ vs $H_a:\theta<3$ using the binomial test at
+$\alpha=0.05$. State your conclusion.
+
+\emph{Let T be the number of observations that are less than $3.0$, so that $T = 14$}
+\begin{align*}
+Z_B &= \frac{14-10}{\sqrt{0.25(20)}} = 1.788 > 1.645 = Z(0.95) \\
+&\Rightarrow \text{Reject } H_0 (\text{p-value } \approx 0.05)
+\end{align*}
+
+\emph{Or calculate an exact p-value based on the Binomial Distribution: }
+\[ P \left. \left(T \geq 15 \right| T \sim Bin(20, .5) \right) = \sum_{i=15}^{20} \binom{20}{i}0.5^i0.5^{20-i} = 0.021\]
+
+\item Find a 95\% confidence interval for $\theta$ using the normal approximation
+to the binomial distribution.
+\begin{align*}
+& \frac{a-0.5(20)}{\sqrt{0.25(20)}}=-Z_{0.975}, \qquad \frac{b-1-0.5(20)}{\sqrt{0.25(20)}}=Z_{0.975} \\
+& \Rightarrow a = 5.617 \text{ and } b = 15.382 \\
+& \Rightarrow 95\% \text{ CI: } (X_{(6)}, X_{(15)})=(1.8, 3.0) \tag*{(With the common rounding method)}\\
+& \text{Or: } (X_{(5)}, X_{(16)})=(1.65, 3.2) \tag*{(With floor lower bound the ceiling upper bound)}
+\end{align*}
+
+\item When should you use a nonparametric test and does this apply to the data in this problem?
+
+\emph{Non-parametric is used when assumptions of parametric test are not met (i.e normal distribution and homogeneity of variances across groups) \\
+In this problem, our data set is nor large neither normal, so non-parametric test is suitable.}
+\end{enumerate}
+
+\section*{Problem 2}
+The data in the following table compare reaction times (in seconds) of participants in front
+of a computer screen. Participants in sample 1 have been given decaffeinated coffee while sample
+2 has been given regular coffee.
+
+\begin{enumerate}[(a)]
+\item Calculate sample means $\bar X$ and $\bar Y$ as well as sample medians $\hat\theta_X$ and $\hat\theta_y$ where $X_1,..,X_8$ refer to sample 1 data and $Y_1,..,Y_4$ to sample 2 data.
+
+\[ \bar{X}=11.75, \bar{Y}=8.75, \hat{\theta_x}=10, \hat{\theta_y}=9 \]
+
+\item Carry out a two-sample t-test for the hypothesis $H_0:\mu_Y=\mu_X$ vs $H_a:\mu_Y>\mu_X$ at $\alpha=0.05$. State your conclusions.
+
+\[t^*=\frac{\bar{Y}-\bar{X}}{\sqrt{\frac{s_x^2}{8}}+\frac{s_y^2}{4}}=\frac{8.75-11.75}{\sqrt{66.21/8+8.916/4}}=-0.9256 \]
+
+\[ df= \frac{(\frac{s_x^2}{n_1}+\frac{s_y^2}{n_2})^2}{(\frac{s_x^2}{n_1})^2/(n_1-1)+(\frac{s_y^2}{n_2})^2/(n_2-1)}=9.646 \]
+
+Since $t^* = -0.9256 < t(0.95,9.646) = 1.81923$, we do NOT reject $H_0$, and its p-value  is 0.8114.
+
+\textbf{NOTE: } There is a simpler way of calculating the degrees of freedom in an unpooled $t$-test. Instead of this crazy calculation, one method that will always give you a lower bound on the degrees of freedom is $df = \min(n, m) - 1$. This is less powerful than the approximate df above, but is far easier to calculate.
+
+\item Calculate a 95\% CI for $\mu_Y-\mu_X$ based on the t-distribution. Assume unequal variances.
+
+\[ \text{CI: } (\bar{Y}-\bar{X}) \pm t(0.975,9.646) \sqrt{ \frac{s_x^2}{8} + \frac{s_y^2}{4} } = (-10.258, 4.258) \]
+
+\item Carry out the Wilcoxon test at $\alpha=0.05$ for the hypothesis in (b).
+\begin{align*}
+& W(\text{sum of Rank } S_1)=1+3+4+6+8+10+11+12=55 \\
+& \text{From table A3 } (m=4, n=8), 5\% \text{ Upper } = 63\\
+& \text{Since } 55<63 \Rightarrow \text{ do NOT reject } H_0\\
+\end{align*}
+\vspace{-3em}
+
+\item Find the Hodges-Lehmann estimate of $\theta_Y-\theta_X$ and a 90\% CI.
+
+Ordered pairwise differences of $(Y_j-X_i)$ : 
+\begin{table}[H] \center
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+-25 &-22& -20 &-18  &-9&  -8 & -6  &-6 & -5 & -4  &-4 & -3 \\ \hline
+ -3 & -2 & -2& -1 & -1  &-1 & -1  & 1  & 1  & 1  & 1 &  2 \\ \hline
+ 3 & 3 &  4  & 4  & 5  & 6&6&8&&&&\\ \hline
+\end{tabular}
+\end{table}
+From Table A4, $l_{0.05}=5, U_{0.05}=27$\\
+$k_a=6, k_b=27 \Rightarrow 90\%$ CI : $(-8,4)$
+
+\item Calculate the exponential scores and find the p-value for the hypothesis in (b).
+
+\emph{Observed Exponential Scores: }
+\begin{table}[H] \center \footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+Sample:			& S1 & S1 & S1 & S1 & S1 & S1 & S1 & S1 & S2 & S2 & S2 & S2 \\ \hline 
+Value:			& 4 &  6 &  7 &  9 & 11 & 13 & 14 & 30 &  5 &  8 & 10 & 12 \\ \hline
+Savage Score:	& -0.917 & -0.726 & -0.615 & -0.347 &  0.020 &  0.603 &  1.103 &  2.103 & -0.826 & -0.490 & -0.180 &  0.270 \\ \hline
+\end{tabular}
+\end{table}
+
+\vspace{-3em}
+\begin{align*}
+& D_{obs} \text{(sum exponential scores of S1) } = 1.224 \\
+& p\text{-value} = 0.7657 \Rightarrow \text{do NOT reject } H_0
+\end{align*}
+
+\item Test the hypothesis $H_0:\sigma_1=\sigma_2$ vs $H_a:\sigma_1>\sigma_2$ using the the Siegel-Tukey test at $\alpha=.05$.
+\emph{Note that our estimates of $\sigma_1$ and $\sigma_2$ are $8.137$, and $2.986$.}
+\begin{align*}
+& (\text{Sum of Siegel-Tukey Rank}) = 1+5+8+12+10+6+3+2 = 47 \\
+& \text{From Table A3}, 5\% \text{ lower} = 41 \Rightarrow \text{Do NOT reject } H_0. \\
+\end{align*}
+
+\item Use the Kolomogorov-Smirnov statistic to test $H_0: F_X(x) = F_Y(x)$ vs $H_a: F_X(x) \neq F_Y(x)$ at $\alpha=0.05$.
+\begin{table}[H] \center
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+Data&4&5 &6& 7& 8& 9 &10& 11 &12&13&14&30\\ \hline
+$\hat{F_x}$&1/8&1/8&1/4&3/8& 3/8&1/2&1/2&5/8&5/8&6/8&7/8&1\\ \hline
+$\hat{F_y}$&0&1/4&1/4&1/4& 1/2&1/2&3/4&3/4&1&1&1&1\\ \hline
+$|\hat{F_x}-\hat{F_y}|$ &1/8&1/8&0&1/8&1/8&0&1/4&1/8&\textbf{3/8}&1/4&1/8&0\\ \hline
+\end{tabular}
+\end{table}
+\emph{ Therefore, $\text{(K-S)}_{obs}=\frac{3}{8}$ and $p\text{-value } = 0.8364 \Rightarrow$ Do NOT reject $H_0$. }
+\end{enumerate}
+
+\newpage
+\section*{Problem 3}
+\begin{enumerate}[(a)]
+\item Restate the hypothesis $H_0: \mu_1 = \mu_2$ vs. $H_a: \mu_1 < \mu_2$ in terms of $F_1(x)$ and $F_2(x)$. Be precise in your statement.
+
+\emph{If two populations have the same family of distribution and the same parameters, it should be clear that the CDFs will also be the same. This means that the null hypothesis may be equivalently re-written $H_0: F_1(x) = F_2(x)$. However, consider the alternative hypothesis, where $\mu_1 < \mu_2$. This means that the average for population 1 is less than the average of population 2. For at least point $x$, this means that there was less``mass'' of the distribution in population 1 to the right of $x$ in population 1 than population 2 (because the mean is smaller in population 1). Since there is less mass to the right in population 1, this means that there is more mass to the left, and thus, a higher probability of a value being less than $x$ than in population 2. Translated to math, this means for at least one point $x$, $H_a: F_1(x) > F_2(x)$.}
+
+\item Suppose in part (a) the alternative hypothesis is two-sided. How can this alternative be expressed in terms of $F_1(x)$ and $F_2(x)$?
+
+\emph{A two-sided alternative is expressed as a combination of two one-sided alternatives, allowing one distribution to dominate the other, or vice versa, but not allowing the distributions to alternate which one dominates the other. $H_a: F_1(x) > F_2(x)$ for at least one $x$ (and equal for everything else), {\bf or} $F_1(x) > F_2(x)$ for at least one $x$, (and all other points equal).}
+
+\item Explain the difference between a skewed distribution and a heavy-tailed distribution.
+
+\emph{A skewed distribution is one in which the mean and median do not equal each other. This happens in distributions that are not symmetric, like the $\chi^2$ or Exponential.}
+
+\emph{A heavy-tailed distribution is one in which the tails of the distribution (the parts of the distribution that are far away from the mean or median) do not drop quickly. Formally, this means that there is still a significant amount of probability for extreme values of the random variable. Practically, this means there is a higher chance of seeing very large values than similar thin-tailed distributions.}
+
+
+\item Calculate the power for a normal test with known variance when testing $H_0: \mu = 0$ vs. $H_a: \mu < 0$ when the true mean is $\mu=-5$ and the variance is $\sigma^2 =9$ for a sample of size $n = 15$ from a normal distribution. Use $\alpha = .05$. Calculate the power of the binomial test for this problem.
+
+\emph{Recall that power is the probability that we correctly reject the null hypothesis when the alternative hypothesis is true. In this problem, we would reject the null hypothesis if $\sqrt{n} (\bar{x} - \mu_0) / \sigma < -z_{1-\alpha}$. We would need to find the probability that this happened, given that the true mean was $\mu=-5$.}
+
+\begin{align*}
+&P \left. \left(\frac{\sqrt{n} (\bar{x} - \mu_0)}{\sigma} < -z_{1-\alpha} \right| \mu=-5 \right) 
+= P\left. \left(\frac{\sqrt{15} (\bar{x})}{3} < -z_{1-\alpha} \right| \mu=-5 \right) \\
+&= P \left. \left(\frac{\sqrt{15} (\bar{x})}{3} - \frac{\sqrt{15} \cdot (-5)}{3} < -z_{1-\alpha} - \frac{\sqrt{15} \cdot (-5)}{3} \right| \mu=-5 \right) \\
+&= P \left. \left(\frac{\sqrt{15} (\bar{x} + 5)}{3} < -z_{1-\alpha} - \frac{\sqrt{15} \cdot (-5)}{3} \right| \mu=-5 \right)
+\end{align*}
+\emph{At this point, note that under the alternative hypothesis, the left side is now a standard normal, and we can use a Z table.}
+\begin{align*}
+P \left(Z < -z_{1-\alpha} + \frac{5 \sqrt{15}}{3} \right) = \Phi \left(-z_{1-\alpha} + \frac{5 \sqrt{15}}{3} \right)
+\end{align*}
+\emph{For $\alpha=.05$, this probability is $\Phi\left( 4.81 \right) \approx 1$.}
+
+\emph{For the binomial test, we must find the probability of observing a value less than the null hypothesis median, given that the true median is determined by the alternative, with given variance. That is, if $p$ is the probability of seeing a value greater than the median of $0$,}
+\begin{align*}
+p &= P \left. \left( X < 0 \right| \mu=-5 \right) \\
+& = P \left. \left( \frac{X+5}{3} < \frac{5}{3} \right| \mu=-5 \right) \\
+& = P \left( Z < \frac{5}{3} \right) = 0.952.
+\end{align*}
+\emph{Plugging into the power equation for a binomial test from Page 20, }
+\begin{align*}
+\mbox{Power of Binomial Test} 
+& = 1-\Phi \left( 1.645 \sqrt{\frac{.25}{p(1-p)}} - \frac{p-.5}{\sqrt{p(1-p)/n}} \right)\\
+& = 1-\Phi \left( -4.342 \right) \approx 1.
+\end{align*}
+
+\item Calculate the power for a Binomial test with known variance when testing $H_0: \mu = 0$ vs. $H_a: \mu < 0$ when the true mean is $\mu=−5$ and the variance is $\sigma^2 =9$ for a sample of size $n = 15$ from a Laplace distribution. Use $\alpha = .05$. 
+
+\emph{First we need to find the probability that a single observation is less than the mean under the null hypothesis, using the Laplace distribution with mean $-5$ and variance $9$.}
+\begin{align*}
+p &= P \left. \left( X < 0 \right| X \sim Laplace(\mbox{mean}=-5, \mbox{var} = 9) \right) \\
+&= P \left. \left( \frac{X+5}{3} < \frac{5}{3} \, \right| X \sim Laplace(\mbox{mean}=-5, \mbox{var} = 9) \right) \\
+& = 1 - \frac{1}{2} \exp \left( - \sqrt{2} \frac{\frac{5}{3}-\mu} {\sigma} \right) \tag*{(Found this CDF on Wikipedia's Laplace page)}\\
+& = 1 - \frac{1}{2} \exp \left( - \sqrt{2} \frac{\frac{5}{3}+5}{3} \right) = 0.978
+\end{align*}
+\emph{The power of the binomial test is then an exercise in plugging in the right values from the formula on Page 20.}
+\begin{align*}
+\mbox{Power of Binomial Test} 
+& = 1-\Phi \left( 1.645 \sqrt{\frac{.25}{p(1-p)}} - \frac{p-.5}{\sqrt{p(1-p)/n}} \right)\\
+& = 1-\Phi \left( -7.014 \right) \approx 1.
+\end{align*}
+\emph{A final table to illustrate the Power, under Normality and under (...ahem...) Laplace-ality. Notice that the Z-test is superior if the data is truly normal, but the Binomial Test does much better than the usual Z-test if the data is not normal (Laplace).}
+\begin{table}[H] \center
+\begin{tabular}{|c|c|c|} \hline 
+\multicolumn{3}{|c|}{Power of Tests under Different Distributions} \\ \hline 
+• & Normal & Laplace \\ \hline 
+CLT & $\Phi\left( 4.81 \right)$ & $\Phi\left( 4.81 \right)$ \\ \hline 
+Binomial Test & $\Phi \left( 4.34 \right)$ & $\Phi \left( 7.01 \right)$ \\ \hline 
+\end{tabular} 
+\end{table}
+\end{enumerate}
+\end{document}
